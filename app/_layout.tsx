@@ -1,9 +1,39 @@
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, useFonts } from "@expo-google-fonts/inter";
+import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  return (
-    <Stack>
-      <Stack.Screen name="index" options={{ title: "Accueil", headerShown: false }} />
-    </Stack>
-  );
+    let fontsLoaded = useFonts({
+        // Contents
+        Inter_400Regular,
+        Inter_500Medium,
+        Inter_600SemiBold,
+
+        // Titles
+        Poppins_400Regular,
+        Poppins_500Medium,
+        Poppins_600SemiBold,
+    });
+
+    useEffect(() => {
+        if (fontsLoaded) {
+        SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
+
+    return (
+        <Stack>
+            <Stack.Screen name="index" options={{ title: "Home", headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="anime/[id]" options={{ headerShown: false }} />
+        </Stack>
+    );
 }
