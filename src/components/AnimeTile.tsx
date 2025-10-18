@@ -16,7 +16,7 @@ export default function AnimeTile({
 }: AnimeTileProps) {
 
     const getTitle = () => {
-        return media.title.english || media.title.romaji || media.title.native;
+        return media.title.romaji || media.title.english || media.title.native;
     };
 
     const getImageUrl = () => {

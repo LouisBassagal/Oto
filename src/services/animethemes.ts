@@ -1,14 +1,16 @@
+import { AnimeTheme } from "../types/animeThemesTypes";
+
 export class AnimeThemesService {
     private apiUrl: string = "https://graphql.animethemes.moe/";
 
-    async makeQuery(query: string) {
+    async makeQuery(query: string, variables: Object = {}) : Promise<any> {
         try {
             const response = await fetch(this.apiUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ query }),
+                body: JSON.stringify({ query, variables }),
             });
 
             if (!response.ok) {
@@ -23,16 +25,37 @@ export class AnimeThemesService {
         }
     }
 
-    async searchAnimeByName(name: string) {
-        const query = `
-        query {
-            anime(slug: "${name}") {
-                name
-                year
-            }
-        }`;
-        return this.makeQuery(query);
+    async getAnimeThemesByAnimeId(animeId: number): Promise<AnimeTheme[]> {
+        try {
+            const query = `
+                query($id: [Int!]) {
+                    findAnimeByExternalSite(site: ANILIST, id: $id) {
+                        animethemes {
+                            id
+                            type
+                            song {
+                                title
+                            }
+                            animethemeentries {
+                                videos {
+                                    nodes {
+                                        id
+                                        basename
+                                    }   
+                                }
+                            }
+                        }
+                    }
+                } `;
+            const variables = { id: animeId };
+            const result = await this.makeQuery(query, variables);
+            const resultAnime = result.data?.findAnimeByExternalSite[0]?.animethemes || [];
+            return resultAnime as AnimeTheme[];
+        } catch (error) {
+            console.error("Error fetching anime themes:", error);
+            return [];
+        }
     }
 }
 
-export const animeService = new AnimeThemesService();
+export const animeThemesService = new AnimeThemesService();

@@ -10,6 +10,7 @@ interface Media {
         medium: string;
         color: string | undefined;
     };
+    description: string | undefined;
     bannerImage: string | undefined;
 }
 

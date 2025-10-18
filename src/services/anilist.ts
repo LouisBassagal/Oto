@@ -40,6 +40,7 @@ export class AnilistService {
                     color
                 }
                 bannerImage
+                description
                 }
             }
         }`;
@@ -65,6 +66,7 @@ export class AnilistService {
                     color
                 }
                 bannerImage
+                description
                 }
             }
         }`;
