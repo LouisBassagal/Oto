@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { router } from "expo-router";
+import { Pressable, Text, View } from "react-native";
 import { AnimeTheme } from "../types/animeThemesTypes";
 
 interface AnimeThemeTileProps {
@@ -18,11 +19,22 @@ export default function AnimeThemeTile({ variant, theme, color }: AnimeThemeTile
             return { width: 160, height: 260 };
         }
     };
+
+    const onPress = () => {
+        console.log("Navigating to player with entry:", theme);
+        router.push({
+            pathname: "/player",
+            params: { 
+                basename: theme.animethemeentries[0]?.videos.nodes[0]?.basename || "",    
+            }
+        });
+    };
+
     return (
-        <View style={{ 
+        <Pressable style={{ 
                 ...getSize(), backgroundColor: '#0e1111', overflow: 'hidden', display: 'flex', flexDirection: "row",
                 shadowColor: color || '#3B82F6', shadowOffset: { width: 4, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8,    
-            }}>
+            }} onPress={() => onPress()}>
             <View style={{ width: 5, height: "100%", backgroundColor: color, borderRadius: 12 }}></View>
             <View style={{ flex: 1, justifyContent: 'center' }}>
                 <Text className="font-poppins" style={{
@@ -31,6 +43,6 @@ export default function AnimeThemeTile({ variant, theme, color }: AnimeThemeTile
                     {theme.song.title}
                 </Text>
             </View>
-        </View>
+        </Pressable>
     );
 }

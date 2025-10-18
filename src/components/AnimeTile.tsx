@@ -46,7 +46,6 @@ export default function AnimeTile({
                 mediaData: JSON.stringify(media)
             }
         });
-        onPress?.(media);
     };
 
     return (
