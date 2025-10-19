@@ -21,7 +21,7 @@ export default function RootLayout() {
 
     useEffect(() => {
         if (fontsLoaded) {
-        SplashScreen.hideAsync();
+            SplashScreen.hideAsync();
         }
     }, [fontsLoaded]);
 
@@ -31,10 +31,10 @@ export default function RootLayout() {
 
     return (
         <Stack>
-            <Stack.Screen name="index" options={{ title: "Home", headerShown: false }} />
-            <Stack.Screen name="player" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="anime/[id]" options={{ headerShown: false }} />
+            <Stack.Screen name="index" options={{ title: "Home", headerShown: false, orientation: "portrait" }} />
+            <Stack.Screen name="player" options={{ headerShown: false, orientation: "portrait" }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false, orientation: "portrait" }} />
+            <Stack.Screen name="anime/[id]" options={{ headerShown: false, orientation: "all" }} />
         </Stack>
     );
 }

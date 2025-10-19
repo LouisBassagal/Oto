@@ -1,6 +1,5 @@
 import { router } from "expo-router";
 import { Pressable, Text, View } from "react-native";
-import "./../global.css";
 
 export default function Index() {
   return (
@@ -9,16 +8,28 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "black",
       }}
-      className="bg-black"
     >
-      <Text className="text-white text-2xl mb-6">Bienvenue sur OTO</Text>
-      
-      <Pressable 
-        className="bg-blue-500 px-6 py-3 rounded-lg"
+      <Text style={{
+        color: "white",
+        fontSize: 24,
+        marginBottom: 20,
+      }}>Bienvenue sur OTO</Text>
+
+      <Pressable
+        style={{
+          backgroundColor: "#3B82F6",
+          paddingHorizontal: 24,
+          paddingVertical: 12,
+          borderRadius: 8,
+        }}
         onPress={() => router.push("/(tabs)/home")}
       >
-        <Text className="text-white font-medium">Entrer dans l'app</Text>
+        <Text style={{
+          color: "white",
+          fontWeight: "500",
+        }}>Entrer dans l'app</Text>
       </Pressable>
     </View>
   );

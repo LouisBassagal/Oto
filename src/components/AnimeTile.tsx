@@ -108,7 +108,7 @@ export default function AnimeTile({
                     <Text 
                         style={{ 
                             color: 'white', 
-                            fontFamily: 'Inter_500Medium',
+                            fontFamily: 'Inter_600SemiBold',
                             flex: 1,
                             fontSize: 12 
                         }} 

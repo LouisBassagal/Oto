@@ -28,12 +28,11 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView
-        style={{  backgroundColor: '#0e1111' }}
-        className="flex-1 bg-black">
+        style={{  backgroundColor: '#0e1111', flex: 1 }}>
         <ScrollView bounces style={{ flex: 1, flexDirection: 'column' }}>
-            <Text className="text-white font-poppins-bold text-4xl w-full items-center justify-center text-center">Welcome to 音</Text>
-            <View className="flex flex-col p-4">
-                <Text className="text-white text-left text-2xl font-poppins-bold mb-2">Popular anime</Text>
+            <Text style={{ color: 'white', fontFamily: 'Poppins_600SemiBold', fontSize: 32, textAlign: 'center' }}>Welcome to 音</Text>
+            <View style={{ flexDirection: 'column', padding: 16 }}>
+                <Text style={{ color: 'white', textAlign: 'left', fontFamily: 'Poppins_600SemiBold', fontSize: 24, marginBottom: 8 }}>Popular anime</Text>
                 <FlatList horizontal
                     data={popularAnime}
                     style={{ flexGrow: 0 }}
@@ -45,8 +44,8 @@ export default function HomeScreen() {
                 />
             </View>
 
-            <View className="flex flex-col h-full p-4">
-                <Text className="text-white text-left text-2xl font-poppins-bold mb-2">Trending anime</Text>
+            <View style={{ flexDirection: 'column', padding: 16 }}>
+                <Text style={{ color: 'white', textAlign: 'left', fontFamily: 'Poppins_600SemiBold', fontSize: 24, marginBottom: 8 }}>Trending anime</Text>
                 <FlatList horizontal
                     data={trendingAnime}
                     style={{ flexGrow: 0 }}

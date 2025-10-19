@@ -34,7 +34,7 @@ export default function AnimeThemesSelector() {
     }, [])
 
     return (
-        <SafeAreaView style={{  backgroundColor: '#0e1111' }} className="flex-1">
+        <SafeAreaView style={{  backgroundColor: '#0e1111', flex: 1, display: 'flex' }}>
             <ScrollView>
                 {/* Image banner with black gradient for style */}
                 <View>

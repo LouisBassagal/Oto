@@ -1,5 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import { useRef } from "react";
+import { View } from "react-native";
 import Video, { VideoRef } from "react-native-video";
 
 export default function Player() {
@@ -11,9 +12,15 @@ export default function Player() {
     const videoRef = useRef<VideoRef>(null);
 
     return (
-        <Video
-            ref={videoRef}
-            source={{ uri: URL }}
-        />
+        <View style={{ flex: 1, backgroundColor: "black" }}>
+            <Video
+                ref={videoRef}
+                source={{ uri: URL }}
+                style={{ flex: 1 }}
+                controls
+                resizeMode="contain"
+                paused={false}
+            />
+        </View>
     );
 };
