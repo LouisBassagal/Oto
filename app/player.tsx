@@ -20,6 +20,7 @@ export default function Player() {
                 controls
                 resizeMode="contain"
                 paused={false}
+                fullscreen={true}
             />
         </View>
     );

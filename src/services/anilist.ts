@@ -74,6 +74,37 @@ export class AnilistService {
         const result = await this.makeQuery(query, variables);
         return result.data?.Page?.media as Media[];
     }
+
+    async searchAnimeByName(name: string) : Promise<Media[]> {
+        var query = `
+        query ($search: String!, $sort: [MediaSort]) {
+            Page {
+                pageInfo {
+                currentPage
+                hasNextPage
+                perPage
+                }
+                media(search: $search, sort: $sort, type: ANIME) {
+                id
+                title {
+                    english
+                    native
+                    romaji
+                }
+                coverImage {
+                    extraLarge
+                    medium
+                    color
+                }
+                bannerImage
+                description
+                }
+            }
+        }`;
+        const variables = { search: name, sort: "SEARCH_MATCH" };
+        const result = await this.makeQuery(query, variables);
+        return result.data?.Page?.media as Media[];
+    }
 }
 
 export const anilistService = new AnilistService();
