@@ -21,7 +21,6 @@ export default function AnimeThemeTile({ variant, theme, color }: AnimeThemeTile
     };
 
     const onPress = () => {
-        console.log("Navigating to player with entry:", theme);
         router.push({
             pathname: "/player",
             params: { 
@@ -31,17 +30,36 @@ export default function AnimeThemeTile({ variant, theme, color }: AnimeThemeTile
     };
 
     return (
-        <Pressable style={{ 
-                ...getSize(), backgroundColor: '#0e1111', overflow: 'hidden', display: 'flex', flexDirection: "row",
-                shadowColor: color || '#3B82F6', shadowOffset: { width: 4, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8,    
-            }} onPress={() => onPress()}>
-            <View style={{ width: 5, height: "100%", backgroundColor: color, borderRadius: 12 }}></View>
-            <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text className="font-poppins" style={{
-                    color: 'white', fontSize: 16, margin: 8 
-                }}>
-                    {theme.song.title}
-                </Text>
+        <Pressable
+             style={{ 
+                ...getSize(), backgroundColor: '#0e1111', display: 'flex', flexDirection: "row",
+                shadowColor: color, shadowOpacity: 0.8, shadowRadius: 4,
+            }}
+            className="h-full w-full"
+            onPress={() => onPress()}
+        >
+            <View
+                className="w-full h-full flex-1 flex-row bg-[#0e1111]"
+                style={{
+                        borderRadius: 12,
+                        shadowColor: color,
+                        shadowOffset: { width: 0, height: 4 },
+                        shadowOpacity: 0.4,
+                        shadowRadius: 12,
+                        elevation: 12,
+                    }}
+            >
+                <View style={{ width: 5, height: "100%", backgroundColor: color, borderRadius: 12 }}></View>
+
+                <View 
+                    className="flex-1 h-full justify-center"
+                >
+                    <Text className="font-poppins h-full align-middle" style={{
+                        color: 'white', fontSize: 16, margin: 8 
+                    }}>
+                        {theme.song.title}
+                    </Text>
+                </View>
             </View>
         </Pressable>
     );

@@ -6,12 +6,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Image, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AnimeThemesSelector() {
     const [openings, setOpenings] = useState<AnimeTheme[]>([]);
     const [endings, setEndings] = useState<AnimeTheme[]>([]);
+    const [isOpeningsLoading, setIsOpeningsLoading] = useState<boolean>(true);
+    const [isEndingsLoading, setIsEndingsLoading] = useState<boolean>(true);
 
     const params = useLocalSearchParams<{
         id: string;
@@ -23,9 +25,10 @@ export default function AnimeThemesSelector() {
     useEffect(() => {
         const fetchThemes = async () => {
             const response = await animeThemesService.getAnimeThemesByAnimeId(anime.id);
-            console.log("Fetched themes:", response);
             const openings = response.filter((theme) => theme.type === "OP");
+            setIsOpeningsLoading(false);
             const endings = response.filter((theme) => theme.type === "ED");
+            setIsEndingsLoading(false);
             setOpenings(openings);
             setEndings(endings);
         };
@@ -35,7 +38,9 @@ export default function AnimeThemesSelector() {
 
     return (
         <SafeAreaView style={{  backgroundColor: '#0e1111', flex: 1, display: 'flex' }}>
-            <ScrollView>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
                 {/* Image banner with black gradient for style */}
                 <View>
                     <Image source={{ uri: anime.bannerImage }} style={{ width: "100%", height: 200 }} />
@@ -80,29 +85,48 @@ export default function AnimeThemesSelector() {
                             Openings ({openings.length})
                         </Text>
 
-                        <FlatList
-                            data={openings}
-                            renderItem={({ item }) => <AnimeThemeTile variant="small" theme={item} color={anime.coverImage.color} />}
-                            keyExtractor={(item) => item.id.toString()}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ paddingLeft: 16, gap: 10 }}
-                        />
+                        {
+                            isOpeningsLoading ?
+                                <ActivityIndicator 
+                                    size="large" 
+                                    color={anime.coverImage.color}
+                                    className="my-6"
+                                />
+                            :
+                            <FlatList
+                                data={openings}
+                                renderItem={({ item }) => <AnimeThemeTile variant="small" theme={item} color={anime.coverImage.color} />}
+                                keyExtractor={(item) => item.id.toString()}
+                                horizontal
+                                className="overflow-visible"
+                                showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={{ paddingLeft: 16, gap: 10 }}
+                            />
+                        }
                     </View>
 
                     <View>
                         <Text style={{ color: anime.coverImage.color, fontSize: 20, marginLeft: 16, marginBottom: 8 }} className="font-poppins-bold">
                             Endings ({endings.length})
                         </Text>
-
-                        <FlatList
-                            data={endings}
-                            renderItem={({ item }) => <AnimeThemeTile variant="small" theme={item} color={anime.coverImage.color} />}
-                            keyExtractor={(item) => item.id.toString()}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ paddingLeft: 16, gap: 10 }}
-                        />
+                        {
+                            isEndingsLoading ?
+                                <ActivityIndicator 
+                                    size="large" 
+                                    color={anime.coverImage.color}
+                                    className="my-6"
+                                />
+                            :
+                                <FlatList
+                                    data={endings}
+                                    renderItem={({ item }) => <AnimeThemeTile variant="small" theme={item} color={anime.coverImage.color} />}
+                                    keyExtractor={(item) => item.id.toString()}
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    className="overflow-visible"
+                                    contentContainerStyle={{ paddingLeft: 16, gap: 10 }}
+                                />
+                        }
                     </View>
                 </View>
             </ScrollView>

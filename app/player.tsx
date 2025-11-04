@@ -12,7 +12,9 @@ export default function Player() {
     const videoRef = useRef<VideoRef>(null);
 
     return (
-        <View style={{ flex: 1, backgroundColor: "black" }}>
+        <View
+            className="flex-1 flex-row bg-black"
+        >
             <Video
                 ref={videoRef}
                 source={{ uri: URL }}
