@@ -77,7 +77,7 @@ export default function TabLayout() {
       <Tabs.Screen 
         name="home" 
         options={{ 
-          title: "Accueil",
+          title: "Home",
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <GlassTabIcon 
@@ -91,7 +91,7 @@ export default function TabLayout() {
       <Tabs.Screen 
         name="search" 
         options={{ 
-          title: "Recherche",
+          title: "Search",
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <GlassTabIcon 

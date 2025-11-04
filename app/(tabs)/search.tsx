@@ -1,7 +1,7 @@
 // app/(tabs)/search.tsx - CONTENU SIMPLE
-import AnimeTile from "@/src/components/AnimeTile";
-import { anilistService } from "@/src/services/anilist";
-import { Media } from "@/src/types/anilistTypes";
+import AnimeTile from "@/components/AnimeTile";
+import { anilistService } from "@/services/anilist";
+import { Media } from "@/types/anilistTypes";
 import { useState } from "react";
 import { FlatList, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

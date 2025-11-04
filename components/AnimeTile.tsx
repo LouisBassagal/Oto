@@ -1,4 +1,4 @@
-import { Media } from "@/src/types/anilistTypes";
+import { Media } from "@/types/anilistTypes";
 import { router } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
 

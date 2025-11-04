@@ -1,7 +1,7 @@
-import AnimeThemeTile from "@/src/components/AnimeThemeTile";
-import { animeThemesService } from "@/src/services/animethemes";
-import { Media } from "@/src/types/anilistTypes";
-import { AnimeTheme } from "@/src/types/animeThemesTypes";
+import AnimeThemeTile from "@/components/AnimeThemeTile";
+import { animeThemesService } from "@/services/animethemes";
+import { Media } from "@/types/anilistTypes";
+import { AnimeTheme } from "@/types/animeThemesTypes";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
