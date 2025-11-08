@@ -52,28 +52,36 @@ export default function PlaylistTile({ playlist, onSelect, onLongPress, isDeleta
     }));
 
     return (
-        <Pressable 
-            onPress={() => onSelect(playlist)} 
-            onLongPress={handleLongPress}
-            className="relative w-full"
-        >
-            <Text className="text-white h-28 border-white border rounded-md">{playlist.name}</Text>
+            <Pressable 
+                onPress={() => onSelect(playlist)} 
+                onLongPress={handleLongPress}
+                className="relative flex-1 flex-row w-full h-40 border-white border rounded-md px-2 py-1 overflow-hidden"
+            >
+                {/* Playlist Cover Image which is the image of the first anime */}
+                <View className="h-full w-1/4">
 
-            {
-                isDeleteMustHide ?
-                    <View className="absolute flex justify-center items-baseline h-full top-0 right-0">
-                        <Animated.View style={animatedStyle}>
-                            <Pressable
-                                className="flex shrink-0 justify-center items-center top-1 right-1 bg-red-600 rounded-full size-10 p-1"
-                                onPress={() => onDelete()}
-                            >
-                                <Ionicons name='trash-bin-outline' size={16} color="white" />
-                            </Pressable>
-                        </Animated.View>
-                    </View>
-                :
-                    null
-            }
-        </Pressable>
+                </View>
+
+                <View className="mt-2 mb-4 mx-1 overflow-hidden">
+                    <Text className="text-white ">{playlist.name}</Text>
+                    <Text className="text-gray-400 mt-1">{playlist.description}</Text>
+                </View>
+
+                {
+                    isDeleteMustHide ?
+                        <View className="absolute flex justify-center items-baseline h-full top-0 right-0">
+                            <Animated.View style={animatedStyle}>
+                                <Pressable
+                                    className="flex shrink-0 justify-center items-center top-1 right-1 bg-red-600 rounded-full size-10 p-1"
+                                    onPress={() => onDelete()}
+                                >
+                                    <Ionicons name='trash-bin-outline' size={16} color="white" />
+                                </Pressable>
+                            </Animated.View>
+                        </View>
+                    :
+                        null
+                }
+            </Pressable>
     );
 };

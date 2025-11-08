@@ -30,6 +30,12 @@ export default function HomeScreen() {
         }
     }, [isDeletable]);
 
+    useEffect(() => {
+        if (storedPlaylists.length === 0 && isDeletable) {
+            setIsDeletable(false);
+        }
+    }, [storedPlaylists]);
+
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ rotate: `${rotation.value * 225}deg` }],
     }));
@@ -50,6 +56,12 @@ export default function HomeScreen() {
 
     const onLongPress = () => {
         setIsDeletable(true);
+    }
+
+    const closeModal = () => {
+        setName("");
+        setDescription("");
+        setIsModalVisible(false);
     }
 
     return (
@@ -107,10 +119,11 @@ export default function HomeScreen() {
                             <Text className="text-white mb-2">
                                 Name
                             </Text>
-                            <TextInput className="bg-white/90 text-black border border-white rounded-lg"
+                            <TextInput className="bg-white/90 !text-black border border-white rounded-lg"
                                 placeholder="Enter a name for your new playlist."
                                 value={name}
                                 onChangeText={(text) => setName(text)}
+                                placeholderTextColor={"black"}
                             />
                         </View>
 
@@ -118,10 +131,11 @@ export default function HomeScreen() {
                             <Text className="text-white mb-2">
                                 Description
                             </Text>
-                            <TextInput className="bg-white/90 text-black border border-white rounded-lg"
+                            <TextInput className="bg-white/90 !text-black border border-white rounded-lg"
                                 placeholder="Enter a description for your new playlist."
                                 value={description}
                                 onChangeText={(text) => setDescription(text)}
+                                placeholderTextColor={"black"}
                             />
                         </View>
 
@@ -131,6 +145,7 @@ export default function HomeScreen() {
                         <Pressable
                             className="w-1/2 bg-red-400/80 rounded-lg items-center justify-center p-4 mb-4"
                             onPress={() => {
+                                closeModal();
                                 setIsModalVisible(false);
                             }}
                         >
@@ -143,6 +158,7 @@ export default function HomeScreen() {
                             className="w-1/2 bg-blue-400/80 rounded-lg items-center justify-center p-4 mb-4"
                             onPress={() => {
                                 onCreatePlaylist(name, description);
+                                closeModal();
                                 setIsModalVisible(false);
                             }}
                         >
