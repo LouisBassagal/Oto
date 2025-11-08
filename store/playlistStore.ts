@@ -8,7 +8,7 @@ import { Playlist, PlaylistTheme } from '@/types/playlist';
 
 interface PlaylistStore {
     playlists: Playlist[];
-    addPlaylist: (name: string) => void;
+    addPlaylist: (name: string, description: string) => void;
     removePlaylist: (playlistId: string) => void;
     addThemeToPlaylist: (playlistId: string, theme: PlaylistTheme) => void;
     removeThemeFromPlaylist: (playlistId: string, themeId: string) => void;
@@ -20,13 +20,13 @@ export const usePlaylistStore = create<PlaylistStore>()(
         (set) => ({
             playlists: [],
 
-            addPlaylist: (name: string) => set((state) => ({
+            addPlaylist: (name: string, description: string) => set((state) => ({
                 playlists: [
                     ...state.playlists,
                     {
                         id: uuidv4(),
                         name,
-                        description: '',
+                        description: description,
                         themes: [],
                     },
                 ],
