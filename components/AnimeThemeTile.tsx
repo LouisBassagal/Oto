@@ -1,14 +1,17 @@
 import { router } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { AnimeTheme } from "../types/animeThemesTypes";
 
 interface AnimeThemeTileProps {
     variant: 'small' | 'medium' | 'large';
     theme: AnimeTheme;
+    onLongPress?: (animeTheme: AnimeTheme) => void;
+    isLongPress?: boolean;
+    setIsLongPress?: (value: boolean) => void;
     color?: string;
 }
 
-export default function AnimeThemeTile({ variant, theme, color }: AnimeThemeTileProps) {
+export default function AnimeThemeTile({ variant, theme, color, onLongPress, isLongPress, setIsLongPress }: AnimeThemeTileProps) {
     const getSize = () => {
         switch (variant) {
         case 'small':
@@ -21,6 +24,11 @@ export default function AnimeThemeTile({ variant, theme, color }: AnimeThemeTile
     };
 
     const onPress = () => {
+        if (isLongPress) {
+            setIsLongPress && setIsLongPress(false);
+            return;
+        }
+
         router.push({
             pathname: "/player",
             params: { 
@@ -30,13 +38,14 @@ export default function AnimeThemeTile({ variant, theme, color }: AnimeThemeTile
     };
 
     return (
-        <Pressable
+        <TouchableOpacity
              style={{ 
                 ...getSize(), backgroundColor: '#0e1111', display: 'flex', flexDirection: "row",
                 shadowColor: color, shadowOpacity: 0.8, shadowRadius: 4,
             }}
             className="h-full w-full"
             onPress={() => onPress()}
+            onLongPress={() => onLongPress ? onLongPress(theme) : null}
         >
             <View
                 className="w-full h-full flex-1 flex-row bg-[#0e1111]"
@@ -61,6 +70,6 @@ export default function AnimeThemeTile({ variant, theme, color }: AnimeThemeTile
                     </Text>
                 </View>
             </View>
-        </Pressable>
+        </TouchableOpacity>
     );
 }

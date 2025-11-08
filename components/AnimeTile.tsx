@@ -1,7 +1,7 @@
 import { useAnimeStore } from "@/store/animeStore";
 import { Media } from "@/types/anilistTypes";
 import { router } from "expo-router";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 interface AnimeTileProps {
   media: Media;
@@ -44,7 +44,7 @@ export default function AnimeTile({
     };
 
     return (
-        <Pressable
+        <TouchableOpacity
             style={[size, { paddingHorizontal: 8 }]}
             onPress={() => handlePress(media)}
         >
@@ -113,6 +113,6 @@ export default function AnimeTile({
                     </Text>
                 </View>
             </View>
-        </Pressable>
+        </TouchableOpacity>
     );
 }

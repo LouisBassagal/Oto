@@ -3,7 +3,8 @@ export interface PlaylistTheme {
     basename: string;
     songTitle: string;
     animeTitle: string;
-    backgroundImageUrl: string;
+    cover: string;
+    color: string | undefined;
     type: string;
 }
 

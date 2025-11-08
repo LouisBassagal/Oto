@@ -19,9 +19,10 @@ export default function SearchScreen() {
         backgroundColor: '#0e1111', paddingHorizontal: 10, 
         height: '100%', width: '100%'
     }}>
-        <TextInput placeholder="Search for anime..." style={{ 
-            height: 40, borderColor: 'gray', borderWidth: 1, margin: 10, paddingLeft: 10,
-            width: '100%', borderRadius: 5, backgroundColor: '#1e2222', color: '#ffffff'
+        <TextInput placeholder="Search for anime..." 
+            style={{ 
+                height: 40, borderColor: 'gray', borderWidth: 1, margin: 10, paddingLeft: 10,
+                width: '100%', borderRadius: 5, backgroundColor: '#1e2222', color: '#ffffff'
             }}
             onEndEditing={(e) => {
                 handleSearchChange(e.nativeEvent.text);

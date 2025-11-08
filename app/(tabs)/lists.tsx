@@ -5,15 +5,19 @@ import { useEffect, useState } from "react";
 import { FlatList, Modal, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import ThemeInList from "@/components/ThemeInList";
+import { Playlist } from "@/types/playlist";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 export default function HomeScreen() {
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+    const [isPlaylistModalVisible, setIsPlaylistModalVisible] = useState(false);
+    const [description, setDescription] = useState("");
+    const [isDeletable, setIsDeletable] = useState(false);
+    const [currentPlaylist, setCurrentPlaylist] = useState<Playlist | null>(null);
     const storedPlaylists = usePlaylistStore((state) => state.playlists);
     const addNewPlaylist = usePlaylistStore((state) => state.addPlaylist);
     const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [isDeletable, setIsDeletable] = useState(false);
     const rotation = useSharedValue(0);
 
     useEffect(() => {
@@ -44,10 +48,12 @@ export default function HomeScreen() {
         addNewPlaylist(name, description);
     };
 
-    const onSelectPlaylist = (playlistId: string) => {
+    const onPressPlaylist = (playlist: Playlist) => {
         if (isDeletable)
             return;
-        console.log("Selected playlist with ID:", playlistId);
+        setCurrentPlaylist(playlist);
+        setIsPlaylistModalVisible(true);
+        console.log("Selected playlist with ID:", playlist.id);
     }
 
     const onDeletePlaylist = (playlistId: string) => {
@@ -58,10 +64,14 @@ export default function HomeScreen() {
         setIsDeletable(true);
     }
 
-    const closeModal = () => {
+    const closeAddModal = () => {
         setName("");
         setDescription("");
-        setIsModalVisible(false);
+        setIsAddModalVisible(false);
+    }
+
+    const closePlaylistModal = () => {
+        setIsPlaylistModalVisible(false);
     }
 
     return (
@@ -72,13 +82,14 @@ export default function HomeScreen() {
             {
                 storedPlaylists.length > 0 ?
                     <FlatList
+                        className="mb-20"
                         data={storedPlaylists}
+                        numColumns={2}
                         keyExtractor={(item) => item.id}
-                        contentContainerStyle={{ gap: 10}}
                         renderItem={({ item }) => (
                             <PlaylistTile 
                                 playlist={item}
-                                onSelect={() => onSelectPlaylist(item.id)}
+                                onPress={() => onPressPlaylist(item)}
                                 onLongPress={onLongPress}
                                 isDeletable={isDeletable}
                                 onDelete={() => onDeletePlaylist(item.id)}
@@ -100,7 +111,7 @@ export default function HomeScreen() {
                         if (isDeletable) {
                             setIsDeletable(false);
                         } else {
-                            setIsModalVisible(true);
+                            setIsAddModalVisible(true);
                         }
                     }
                 }
@@ -110,7 +121,7 @@ export default function HomeScreen() {
                 </Animated.View>
             </Pressable>
 
-            <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+            <Modal visible={isAddModalVisible} animationType="fade" transparent={true}>
                 <SafeAreaView className="flex-1 flex-col justify-between px-5 py-10 bg-[#0e1111]/90">
                     <Text className="w-full font-poppins text-white text-xl">New Playlist</Text>
 
@@ -145,8 +156,7 @@ export default function HomeScreen() {
                         <Pressable
                             className="w-1/2 bg-red-400/80 rounded-lg items-center justify-center p-4 mb-4"
                             onPress={() => {
-                                closeModal();
-                                setIsModalVisible(false);
+                                closeAddModal();
                             }}
                         >
                             <Text className="font-poppins text-lg text-white">
@@ -158,8 +168,7 @@ export default function HomeScreen() {
                             className="w-1/2 bg-blue-400/80 rounded-lg items-center justify-center p-4 mb-4"
                             onPress={() => {
                                 onCreatePlaylist(name, description);
-                                closeModal();
-                                setIsModalVisible(false);
+                                closeAddModal();
                             }}
                         >
                             <Text className="font-poppins text-lg text-white">
@@ -167,6 +176,53 @@ export default function HomeScreen() {
                             </Text>
                         </Pressable>
                     </View>
+                </SafeAreaView>
+            </Modal>
+
+            <Modal visible={isPlaylistModalVisible} animationType="fade" transparent={true}>
+                <SafeAreaView className="flex-1 flex-col justify-between p-2 bg-[#0e1111]/90">
+                    <Text className="text-white mb-2 text-2xl">{currentPlaylist?.name}</Text>
+
+                    <Text className="text-gray-400 text-base mb-5">{currentPlaylist?.description}</Text>
+
+                    <View className="w-full flex flex-row border mb-5 border-gray-400 items-center rounded-full px-2 overflow-hidden">
+                        <Ionicons name="search" size={24} color="white" />
+                        <TextInput className="bg-transparent" placeholder="Search a song..." placeholderTextColor="gray" />
+                    </View>
+
+                    <FlatList
+                        className="!h-2/3"
+                        data={currentPlaylist?.themes}
+                        keyExtractor={(item) => item.id}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{ 
+                            gap: 10
+                        }}
+                        renderItem={({ item }) => (
+                            <ThemeInList {...item} />
+                    )}/>
+
+                    <View className="w-full flex-1 flex-row gap-2 mt-5">
+                            <Pressable
+                                className="w-4/5 h-14 bg-red-400/80 rounded-lg items-center justify-center"
+                                onPress={() => {
+                                    closePlaylistModal();
+                                }}
+                            >
+                                <Text className="font-poppins text-lg text-white">
+                                    Close
+                                </Text>
+                            </Pressable>
+
+                            <Pressable
+                                className="w-1/5 h-14 bg-blue-400/80 rounded-lg items-center justify-center"
+                                onPress={() => {
+                                    closePlaylistModal();
+                                }}
+                            >
+                                <Ionicons name="pencil" size={24} color="white" />
+                            </Pressable>
+                        </View>
                 </SafeAreaView>
             </Modal>
         </SafeAreaView>
