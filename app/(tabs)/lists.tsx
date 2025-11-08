@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import ThemeInList from "@/components/ThemeInList";
 import { Playlist } from "@/types/playlist";
+import { router } from "expo-router";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 export default function HomeScreen() {
@@ -32,13 +33,13 @@ export default function HomeScreen() {
                 easing: Easing.bounce
             });
         }
-    }, [isDeletable]);
+    }, [isDeletable, rotation]);
 
     useEffect(() => {
         if (storedPlaylists.length === 0 && isDeletable) {
             setIsDeletable(false);
         }
-    }, [storedPlaylists]);
+    }, [isDeletable, storedPlaylists]);
 
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ rotate: `${rotation.value * 225}deg` }],
@@ -74,6 +75,15 @@ export default function HomeScreen() {
         setIsPlaylistModalVisible(false);
     }
 
+    const onThemeListPress = (basename: string) => {
+        router.push({
+            pathname: "/player",
+            params: {
+                basename
+            }
+        });
+    }
+
     return (
         <SafeAreaView 
             className="h-full w-full bg-[#0e1111] px-5 py-2"
@@ -100,7 +110,7 @@ export default function HomeScreen() {
                     <View className="w-full h-full justify-center items-center px-4">
                         <Ionicons name="albums-outline" size={64} color="#555555" />
                         <Text className="font-poppins mt-4 text-center text-gray-500">
-                            No lists found. Add a new list by pressing the "+" button.
+                            No lists found. Add a new list by pressing the &quot;+&quot; button.
                         </Text>
                     </View>
             }
@@ -199,7 +209,9 @@ export default function HomeScreen() {
                             gap: 10
                         }}
                         renderItem={({ item }) => (
-                            <ThemeInList {...item} />
+                            <ThemeInList theme={item} onPress={() => {
+                                onThemeListPress(item.basename);
+                            }} />
                     )}/>
 
                     <View className="w-full flex-1 flex-row gap-2 mt-5">

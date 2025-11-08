@@ -22,6 +22,12 @@ export default function PlaylistTile({ playlist, onPress, onLongPress, isDeletab
         onLongPress();
     };
 
+    const onAnimationEnd = () => {
+        if (!isDeletable) {
+            setIsDeleteMustHide(false);
+        }
+    }
+
     useEffect(() => {
         if (isDeletable) {
             scale.value = withTiming(1, {
@@ -39,13 +45,7 @@ export default function PlaylistTile({ playlist, onPress, onLongPress, isDeletab
                 easing: Easing.bounce,
             });
         }
-    }, [isDeletable]);
-
-    const onAnimationEnd = () => {
-        if (!isDeletable) {
-            setIsDeleteMustHide(false);
-        }
-    }
+    }, [isDeletable, scale, onAnimationEnd]);
 
     const getImageGrid = () => {
         if (playlist.themes.length === 0) {

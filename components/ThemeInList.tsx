@@ -1,15 +1,21 @@
 import { PlaylistTheme } from "@/types/playlist";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+
+interface ThemeInListProps {
+    theme: PlaylistTheme;
+    onPress?: () => void;
+}
 
 
-export default function ThemeInList(theme: PlaylistTheme) {
-    console.log("Rendering ThemeInList for theme:", theme);
+export default function ThemeInList({ theme, onPress }: ThemeInListProps) {
+
     return (
-        <View className="
+        <TouchableOpacity className="
                 flex flex-row w-full bg-black/90 
                 rounded-md p-2 items-center justify-center gap-2
                 shadow-lg
             "
+            onPress={onPress}
             style={{
                 shadowColor: theme.color,
                 shadowOffset: { width: 0, height: 4 },
@@ -33,6 +39,6 @@ export default function ThemeInList(theme: PlaylistTheme) {
                     {theme.songTitle}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }

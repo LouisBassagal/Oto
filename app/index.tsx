@@ -29,7 +29,7 @@ export default function Index() {
             <Text style={{
             color: "white",
             fontWeight: "500",
-            }}>Entrer dans l'app</Text>
+            }}>Entrer dans l&apos;app</Text>
         </TouchableOpacity>
     </View>
   );

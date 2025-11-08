@@ -34,7 +34,7 @@ export default function AnimeThemesSelector() {
         };
 
         fetchThemes();
-    }, [])
+    }, [anime.id])
 
     const onLongPressTheme = (theme: AnimeTheme) => {
         setIsPlaylistModalVisible(true);
@@ -189,7 +189,7 @@ export default function AnimeThemesSelector() {
                             className="w-full h-14 bg-red-400/80 rounded-lg items-center justify-center"
                             onPress={() => {
                                 setIsPlaylistModalVisible(false);
-                            }}    
+                            }}
                         >
                             <Text className="text-white">Close</Text>
                         </TouchableOpacity>
