@@ -1,3 +1,4 @@
+import { useAnimeStore } from "@/store/animeStore";
 import { Media } from "@/types/anilistTypes";
 import { router } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
@@ -38,14 +39,8 @@ export default function AnimeTile({
     const themeColor = media.coverImage.color || '#3B82F6';
 
     const handlePress = (media: Media) => {
-        const mediaId = media.id.toString();
-        router.push({
-            pathname: "/anime/[id]",
-            params: { 
-                id: mediaId,
-                mediaData: JSON.stringify(media)
-            }
-        });
+        useAnimeStore.getState().setSelectedAnime(media);
+        router.push(`/anime/${media.id}`);
     };
 
     return (

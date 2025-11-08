@@ -36,8 +36,8 @@ export class AnimeThemesService {
                             song {
                                 title
                             }
-                            animethemeentries {
-                                videos {
+                            animethemeentries(first: 1) {
+                                videos(first: 1) {
                                     nodes {
                                         id
                                         basename

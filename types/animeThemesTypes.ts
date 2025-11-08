@@ -1,5 +1,5 @@
 interface AnimeTheme {
-    type: ;
+    type: string;
     id: number;
     song: Song;
     animethemeentries: AnimeEntry[];

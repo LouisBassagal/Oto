@@ -10,8 +10,12 @@ export class AnilistService {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ query, variables }),
+                body: JSON.stringify({
+                    query,
+                    variables
+                }),
             });
+            
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }

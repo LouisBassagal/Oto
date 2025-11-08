@@ -1,10 +1,9 @@
 import AnimeThemeTile from "@/components/AnimeThemeTile";
 import { animeThemesService } from "@/services/animethemes";
-import { Media } from "@/types/anilistTypes";
+import { useAnimeStore } from "@/store/animeStore";
 import { AnimeTheme } from "@/types/animeThemesTypes";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,13 +13,7 @@ export default function AnimeThemesSelector() {
     const [endings, setEndings] = useState<AnimeTheme[]>([]);
     const [isOpeningsLoading, setIsOpeningsLoading] = useState<boolean>(true);
     const [isEndingsLoading, setIsEndingsLoading] = useState<boolean>(true);
-
-    const params = useLocalSearchParams<{
-        id: string;
-        mediaData: string;
-    }>();
-    const media = JSON.parse(params.mediaData) as Media;
-    const anime: Media = media;
+    const anime = useAnimeStore(state => state.selectedAnime)!;
 
     useEffect(() => {
         const fetchThemes = async () => {
