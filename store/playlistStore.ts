@@ -8,11 +8,15 @@ import { Playlist, PlaylistTheme } from '@/types/playlist';
 
 interface PlaylistStore {
     playlists: Playlist[];
+    currentPlaylist?: Playlist;
     addPlaylist: (name: string, description: string) => void;
     removePlaylist: (playlistId: string) => void;
     addThemeToPlaylist: (playlistId: string, theme: PlaylistTheme) => void;
     removeThemeFromPlaylist: (playlistId: string, themeId: string) => void;
     renamePlaylist: (playlistId: string, newName: string) => void;
+
+    addCurrentPlaylist: (playlist: Playlist) => void;
+    removeCurrentPlaylist: () => void;
 }
 
 export const usePlaylistStore = create<PlaylistStore>()(
@@ -64,6 +68,14 @@ export const usePlaylistStore = create<PlaylistStore>()(
                             name: newName 
                         } : playlist
                 )
+            })),
+
+            addCurrentPlaylist: (playlist: Playlist) => set(() => ({
+                currentPlaylist: playlist,
+            })),
+
+            removeCurrentPlaylist: () => set(() => ({
+                currentPlaylist: undefined,
             })),
         }),
         { 

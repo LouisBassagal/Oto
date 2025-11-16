@@ -76,6 +76,7 @@ export default function HomeScreen() {
     }
 
     const onThemeListPress = (basename: string) => {
+        usePlaylistStore.getState().addCurrentPlaylist(currentPlaylist!);
         router.push({
             pathname: "/player",
             params: {
